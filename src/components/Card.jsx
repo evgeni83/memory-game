@@ -1,23 +1,22 @@
 import React from "react";
 
-export default function (props) {
+export default function ({item, index, openCard}) {
     let className = "cardsGrid__item";
 
-    if (props.item.isOpen) {
+    if (item.isOpen) {
         className += " opened";
     }
 
-    if (props.item.isHidden) {
+    if (item.isHidden) {
         className += " hidden";
     }
 
     return <div
-        className={className}
-        onClick={ event => {
-            props.openCard(props.index);
+        className={ className }
+        onClick={ () => {
+            openCard(index);
         } }
     >
-        <div>{ props.item.img }</div>
-        <div className="back"></div>
+        <div className="img-wrap"><img className="img" src={ item.img } alt="icon"/></div>
     </div>;
 }

@@ -1,12 +1,12 @@
 import React from "react";
 
-export default function (props) {
+export default function ({isGameOver, startTheGame}) {
     return (
-    <div className={`final-screen ${props.isGameOver ? "" : "hidden"}`}>
+    <div className={`final-screen ${isGameOver ? "" : "hidden"}`}>
         you win!
         <button
             className="restart-btn"
-            onClick={props.startTheGame}
+            onClick={startTheGame}
         >Restart</button>
     </div>
     );

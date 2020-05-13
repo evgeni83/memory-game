@@ -1,11 +1,11 @@
 import React from "react";
 
-export default function (props) {
+export default function ({isGameStarted, startTheGame}) {
     return (
-    <div className={props.isGameStarted ? "start-wrapper hidden" : "start-wrapper"}>
+    <div className={isGameStarted ? "start-wrapper hidden" : "start-wrapper"}>
         <button
             className="start-btn"
-            onClick={props.startTheGame}
+            onClick={startTheGame}
         >Start</button>
     </div>
     );
