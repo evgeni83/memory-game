@@ -5,7 +5,7 @@ export default function ({isGameOver, startTheGame, timer, results}) {
     return (
         <div className={ `final-screen ${ isGameOver ? "" : "hidden" }` }>
             you win!
-            <span>your time is</span>
+            <span className="time-is">your time is</span>
             <CommonTimer timer={ timer }/>
             <button
                 className="restart-btn"

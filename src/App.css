@@ -1,15 +1,28 @@
 body {
     margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 h1 {
     text-align: center;
+    color: darkorange;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+}
+
+.timer {
+    color: tomato;
+}
+.time-is {
+    font-size: 30px;
+}
+.common-timer {
+    font-family: monospace;
+    font-size: 30px;
 }
 
 main {
@@ -29,7 +42,6 @@ main {
     color: red;
     font-size: 50px;
     font-weight: bold;
-    font-family: Arial, sans-serif;
     text-transform: uppercase;
     display: flex;
     flex-direction: column;
@@ -49,7 +61,6 @@ main {
     background-color: forestgreen;
     color: antiquewhite;
     text-transform: uppercase;
-    font-family: Arial, sans-serif;
     font-size: 30px;
     border-radius: 10px;
 }
