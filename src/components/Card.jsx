@@ -1,10 +1,23 @@
 import React from "react";
 
 export default function (props) {
+    let className = "cardsGrid__item";
+
+    if (props.item.isOpen) {
+        className += " opened";
+    }
+
+    if (props.item.isHidden) {
+        className += " hidden";
+    }
+
     return <div
-        className={ props.item.isOpen ? "cardsGrid__item opened" : "cardsGrid__item" }
+        className={className}
         onClick={ event => {
-            props.toggleCardOpening(event.currentTarget, props.item, props.index);
+            props.openCard(props.index);
         } }
-    >{ props.item.img }</div>;
+    >
+        <div>{ props.item.img }</div>
+        <div className="back"></div>
+    </div>;
 }
