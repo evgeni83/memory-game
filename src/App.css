@@ -74,6 +74,12 @@ main {
     grid-template-rows: repeat(6, 15%);
     grid-gap: 10px;
     perspective: 1000px;
+    opacity: 0;
+}
+
+
+.cardsGrid.visible {
+    opacity: 1;
 }
 
 .cardsGrid__item {
@@ -87,7 +93,7 @@ main {
     padding: 10px;
     cursor: pointer;
     user-select: none;
-    transform: rotateY(180deg);
+    transform: rotateY(180deg) scale(1);
     transition: transform 0.3s;
 }
 
@@ -105,7 +111,7 @@ main {
 }
 
 .opened {
-    transform: rotateY(0deg);
+    transform: rotateY(0deg) scale(1);
 }
 
 .opened::after {
@@ -113,8 +119,7 @@ main {
 }
 
 .hidden {
-    opacity: 0;
-    visibility: hidden;
+    transform: rotateY(0deg) scale(0);
 }
 
 .img-wrap {
