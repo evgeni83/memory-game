@@ -1,0 +1,51 @@
+.item {
+	position: relative;
+	z-index: 2;
+	visibility: visible;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid aqua;
+	padding: 10px;
+	cursor: pointer;
+	user-select: none;
+	transform: rotateY(180deg) scale(1);
+	transition: transform 0.3s;
+
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: lightcoral;
+		transform: rotateY(0deg);
+		backface-visibility: hidden;
+		transition: transform 0.3s;
+	}
+
+	&.opened {
+		transform: rotateY(0deg) scale(1);
+
+		&::after {
+			transform: rotateY(180deg);
+		}
+	}
+
+	&.hidden {
+		transform: rotateY(0deg) scale(0);
+	}
+}
+
+
+.imgWrap {
+	width: 100%;
+	height: 100%;
+}
+
+.img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}

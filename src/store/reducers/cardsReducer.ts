@@ -85,7 +85,6 @@ export const cardsReducer = ( state = initialState, action: CardsAction ): Cards
 
 		case CardsActionsTypes.HIDE_MATCHED:
 			return state.map( card => {
-				console.log(action.payload);
 				action.payload.forEach( match => {
 					if ( match?.id === card.id ) {
 						card.isHidden = true;

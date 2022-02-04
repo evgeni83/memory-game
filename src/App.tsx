@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
-import CardsGrid from './components/CardsGrid';
-import './App.css';
+import CardsGrid from './components/CardsGrid/CardsGrid';
+import './App.scss';
 
 const App: FC = () => {
 	return <div>

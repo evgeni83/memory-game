@@ -1,0 +1,15 @@
+.cardsGrid {
+	height: 80vh;
+	max-width: 80%;
+	margin: 10px auto;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(6, 15%);
+	grid-gap: 10px;
+	perspective: 1000px;
+	opacity: 0;
+
+	&.visible {
+		opacity: 1;
+	}
+}

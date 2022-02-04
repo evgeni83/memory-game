@@ -1,9 +1,9 @@
 import React from "react";
-import "./App.css";
+import "./App.scss";
 import StartScreen from "./components/StartScreen";
 import CommonTimer from "./components/CommonTimer";
 import FinalScreen from "./components/FinalScreen";
-import CardsGrid from "./components/CardsGrid";
+import CardsGrid from "./components/CardsGrid/CardsGrid";
 
 class App extends React.Component  {
 

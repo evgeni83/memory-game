@@ -1,9 +1,11 @@
 import React, { FC, useEffect, useState } from 'react';
-import Card from './Card';
-import { useTypedSelector } from '../hooks/useTypedSelector';
+import Card from '../Card/Card';
+import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { closeAllCards, hideMatchedCards, shuffleCards } from '../store/actions/cardsAction';
-import { cleanMatch } from '../store/actions/matchAction';
+import { closeAllCards, hideMatchedCards, shuffleCards } from '../../store/actions/cardsAction';
+import { cleanMatch } from '../../store/actions/matchAction';
+
+import classes from './cardsGrid.module.scss';
 
 const CardsGrid: FC = () => {
 	const [ show, setShow ] = useState( false );
@@ -31,10 +33,10 @@ const CardsGrid: FC = () => {
 		}
 	} );
 
-	const classNames = [ 'cardsGrid' ];
+	const classNames = [ classes.cardsGrid ];
 
 	if ( show ) {
-		classNames.push( 'visible' );
+		classNames.push( classes.visible );
 	}
 
 	return (
