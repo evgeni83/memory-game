@@ -1,47 +1,35 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import Card from '../Card/Card';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { closeAllCards, hideMatchedCards, shuffleCards } from '../../store/actions/cardsAction';
-import { cleanMatch } from '../../store/actions/matchAction';
+import { closeAllCards, hideMatchedCards } from '../../store/actions/cardsActions';
+import { cleanMatch } from '../../store/actions/matchActions';
 
 import classes from './cardsGrid.module.scss';
 
 const CardsGrid: FC = () => {
-	const [ show, setShow ] = useState( false );
-	const cards = useTypedSelector( state => state.cards );
+	const { list } = useTypedSelector( state => state.cards );
 	const match = useTypedSelector( state => state.match );
 	const dispatch = useDispatch();
 
 	useEffect( () => {
-		dispatch( shuffleCards() );
-		setShow( true );
-	}, [] );
-
-	useEffect( () => {
-		if ( match.length === 2) {
+		if ( match.length === 2 ) {
 			setTimeout( () => {
 				dispatch( cleanMatch() );
 
-				if ( match[0]?.img === match[1]?.img ) {
-					dispatch( hideMatchedCards( match ))
+				if ( match[ 0 ]?.img === match[ 1 ]?.img ) {
+					dispatch( hideMatchedCards( match ) );
 				} else {
 					dispatch( closeAllCards() );
 				}
 
-			}, 1000)
+			}, 1000 );
 		}
-	} );
-
-	const classNames = [ classes.cardsGrid ];
-
-	if ( show ) {
-		classNames.push( classes.visible );
-	}
+	}, [ match ] );
 
 	return (
-		<div className={ classNames.join( ' ' ) }>
-			{ cards.map( item => <Card key={ item.id } item={ item }/> ) }
+		<div className={ classes.cardsGrid }>
+			{ list.map( item => <Card key={ item.id } item={ item }/> ) }
 		</div>
 	);
 };

@@ -10,6 +10,9 @@ export const matchReducer = ( state = initialState, action: MatchAction ): IMatc
 			}
 
 			if ( state.length === 1 ) {
+				if ( state[ 0 ]?.id === action.payload.id ) {
+					return [ ...state ];
+				}
 				return [ state[ 0 ], action.payload ];
 			}
 

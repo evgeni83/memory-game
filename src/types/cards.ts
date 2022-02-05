@@ -5,9 +5,13 @@ export enum CardsActionsTypes {
 	OPEN = 'OPEN',
 	CLOSE_ALL = 'CLOSE_ALL',
 	HIDE_MATCHED = 'HIDE_MATCHED',
+	SHOW_ALL_HIDDEN = 'SHOW_ALL_HIDDEN',
 }
 
-export type CardsState = Array<ICard>;
+export interface ICardsState {
+	list: Array<ICard>;
+	matchedCardsAmount: number;
+}
 
 export interface ICard {
 	id: number;
@@ -34,4 +38,13 @@ interface ICloseAllAction {
 	type: CardsActionsTypes.CLOSE_ALL;
 }
 
-export type CardsAction = IShuffleCardsAction | IOpenCardAction | IHideMatchedAction | ICloseAllAction;
+interface IShowAllHiddenAction {
+	type: CardsActionsTypes.SHOW_ALL_HIDDEN;
+}
+
+export type CardsAction =
+	IShuffleCardsAction
+	| IOpenCardAction
+	| IHideMatchedAction
+	| ICloseAllAction
+	| IShowAllHiddenAction;

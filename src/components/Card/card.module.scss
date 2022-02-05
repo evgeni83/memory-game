@@ -5,12 +5,14 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border: 1px solid aqua;
+	border: none;
+	border-radius: 5px;
+	overflow: hidden;
 	padding: 10px;
 	cursor: pointer;
 	user-select: none;
 	transform: rotateY(180deg) scale(1);
-	transition: transform 0.3s;
+	transition: transform 0.2s;
 
 	&::after {
 		content: "";
@@ -22,7 +24,7 @@
 		background-color: lightcoral;
 		transform: rotateY(0deg);
 		backface-visibility: hidden;
-		transition: transform 0.3s;
+		transition: transform 0.2s;
 	}
 
 	&.opened {

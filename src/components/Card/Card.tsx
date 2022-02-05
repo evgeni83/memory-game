@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
 import { ICard } from '../../types/cards';
 import { useDispatch } from 'react-redux';
-import { openCard } from '../../store/actions/cardsAction';
-import { addToMatch } from '../../store/actions/matchAction';
+import { openCard } from '../../store/actions/cardsActions';
+import { addToMatch } from '../../store/actions/matchActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 
 import classes from './card.module.scss';

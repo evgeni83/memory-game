@@ -1,4 +1,4 @@
-import { CardsActionsTypes, ICard } from '../../types/cards';
+import { CardsActionsTypes } from '../../types/cards';
 import { IMatchState } from '../../types/match';
 
 export const shuffleCards = () => {
@@ -15,4 +15,8 @@ export const hideMatchedCards = ( payload: IMatchState ) => {
 
 export const closeAllCards = () => {
 	return { type: CardsActionsTypes.CLOSE_ALL };
+};
+
+export const showAllHiddenCards = () => {
+	return { type: CardsActionsTypes.SHOW_ALL_HIDDEN };
 };
