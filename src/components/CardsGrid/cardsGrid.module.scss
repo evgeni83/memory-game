@@ -1,0 +1,12 @@
+.cardsGrid {
+	height: 72vh;
+	max-height: 700px;
+	max-width: 700px;
+	margin: 10px auto 0;
+	padding: 10px;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: repeat(6, calc((100% - 50px) / 6));
+	grid-gap: 10px;
+	perspective: 1000px;
+}
