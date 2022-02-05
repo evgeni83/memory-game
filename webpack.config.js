@@ -13,7 +13,7 @@ module.exports = {
 	entry: { app: path.resolve( __dirname, 'src', 'index.tsx' ) },
 	output: {
 		path: path.resolve( __dirname, 'dist' ),
-		filename: 'js/[name].js',
+		filename: IS_DEV ? 'js/[name].js' : 'js/[name][fullhash:base64].js',
 		clean: true,
 		publicPath: '/',
 	},
@@ -86,7 +86,7 @@ module.exports = {
 			template: path.resolve( __dirname, 'src', 'index.html' ),
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: 'css/[name].css',
+			filename: IS_DEV ? 'css/[name].css' : 'css/[name][fullhash:base64].css',
 		} ),
 	],
 	optimization: {
