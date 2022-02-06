@@ -1,4 +1,13 @@
-import { GameActionsTypes, ISetIsRecord, IStartTimer, IStopGame, IStopTimer } from '../../types/game';
+import {
+	GameActionsTypes,
+	IGetResults,
+	ISetIsRecord,
+	IStartGame,
+	IStartTimer,
+	IStopGame,
+	IStopTimer,
+	IUpdateResults,
+} from '../../types/game';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { RootState } from '../reducers';
@@ -15,7 +24,11 @@ export const startGame = (): ThunkAction<void, RootState, unknown, AnyAction> =>
 	}, 1000 );
 
 	dispatch( startTimer( timerID ) );
-	dispatch( { type: GameActionsTypes.START_GAME } );
+
+	const startGameAction: IStartGame = { type: GameActionsTypes.START_GAME };
+
+	dispatch( startGameAction );
+
 	dispatch( setIsRecord( false ) );
 };
 
@@ -26,14 +39,12 @@ export const stopGame = ( isQuit: boolean = false ): ThunkAction<void, RootState
 
 	if ( !isQuit ) {
 		dispatch( updateResults() );
-	} else {
-
 	}
 
 	const stopGameAction: IStopGame = {
 		type: GameActionsTypes.STOP_GAME,
-		payload: isQuit
-	}
+		payload: isQuit,
+	};
 
 	dispatch( stopGameAction );
 };
@@ -47,20 +58,30 @@ export const stopTimer = (): IStopTimer => ( { type: GameActionsTypes.STOP_TIMER
 
 export const getResults = (): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch ) => {
 	const storedResults = localStorage.getItem( 'memoryGameResults' );
+
 	if ( storedResults ) {
 		const results = formatResults( JSON.parse( storedResults ) );
-		dispatch( { type: GameActionsTypes.GET_RESULTS, payload: results } );
+
+		const getResultsAction: IGetResults = { type: GameActionsTypes.GET_RESULTS, payload: results };
+
+		dispatch( getResultsAction );
 	}
 };
 
 export const updateResults = (): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch, getState ) => {
 	const { results, timer } = getState().game;
 	const resultsHaveCurrentValue = results.findIndex( result => result === timer ) >= 0;
+
 	if ( !resultsHaveCurrentValue ) {
 		results.push( timer );
+
 		const updatedResults = formatResults( results );
+
 		window.localStorage.setItem( 'memoryGameResults', JSON.stringify( updatedResults ) );
-		dispatch( { type: GameActionsTypes.UPDATE_RESULTS, payload: updatedResults } );
+
+		const updateResultsAction: IUpdateResults = { type: GameActionsTypes.UPDATE_RESULTS, payload: updatedResults };
+
+		dispatch( updateResultsAction );
 	}
 };
 
