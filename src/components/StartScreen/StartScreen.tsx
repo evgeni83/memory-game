@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { setIsRecord, startGame } from '../../store/actions/gameActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Timer from '../Timer/Timer';
+import Button from '../Button/Button';
 
 const StartScreen: FC = () => {
 	const dispatch = useDispatch();
@@ -22,14 +23,10 @@ const StartScreen: FC = () => {
 	return (
 		<div className={ classes.wrapper }>
 			{ isGameOver && <>
-				<h1 className={ classes.title }>Congratulations! You win!</h1>
+				<h1 className={ classes.title }>You win!</h1>
 				<p className={ classes.time }>your { isRecord ? 'record ' : null }time is</p>
 				<Timer timer={ timer }/>
 			</> }
-			<button className={ classes.btn }
-					onClick={ clickHandler }
-			>{ isGameOver ? 'Play again' : 'Play' }
-			</button>
 			{ results.length > 0 && <>
 				<h2 className={ classes.resultsTitle }>your best results</h2>
 				<div className="last-results">
@@ -42,6 +39,9 @@ const StartScreen: FC = () => {
 					} ) }
 				</div>
 			</> }
+			<Button clickHandler={ clickHandler }
+			>{ isGameOver ? 'Play again' : 'Play' }
+			</Button>
 		</div>
 	);
 };

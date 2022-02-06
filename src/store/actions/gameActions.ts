@@ -1,4 +1,4 @@
-import { GameActionsTypes } from '../../types/game';
+import { GameActionsTypes, ISetIsRecord, IStartTimer, IStopGame, IStopTimer } from '../../types/game';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { RootState } from '../reducers';
@@ -19,18 +19,31 @@ export const startGame = (): ThunkAction<void, RootState, unknown, AnyAction> =>
 	dispatch( setIsRecord( false ) );
 };
 
-export const stopGame = (): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch, getState ) => {
+export const stopGame = ( isQuit: boolean = false ): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch, getState ) => {
 	const { timerID } = getState().game;
 	window.clearInterval( timerID );
-
 	dispatch( stopTimer() );
-	dispatch( updateResults() );
-	dispatch( { type: GameActionsTypes.STOP_GAME } );
+
+	if ( !isQuit ) {
+		dispatch( updateResults() );
+	} else {
+
+	}
+
+	const stopGameAction: IStopGame = {
+		type: GameActionsTypes.STOP_GAME,
+		payload: isQuit
+	}
+
+	dispatch( stopGameAction );
 };
 
-export const startTimer = ( timerID: number ) => ( { type: GameActionsTypes.START_TIMER, payload: timerID } );
+export const startTimer = ( timerID: number ): IStartTimer => ( {
+	type: GameActionsTypes.START_TIMER,
+	payload: timerID,
+} );
 
-export const stopTimer = () => ( { type: GameActionsTypes.STOP_TIMER } );
+export const stopTimer = (): IStopTimer => ( { type: GameActionsTypes.STOP_TIMER } );
 
 export const getResults = (): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch ) => {
 	const storedResults = localStorage.getItem( 'memoryGameResults' );
@@ -51,6 +64,9 @@ export const updateResults = (): ThunkAction<void, RootState, unknown, AnyAction
 	}
 };
 
-export const setIsRecord = ( isRecord: boolean ) => ( { type: GameActionsTypes.SET_IS_RECORD, payload: isRecord } );
+export const setIsRecord = ( isRecord: boolean ): ISetIsRecord => ( {
+	type: GameActionsTypes.SET_IS_RECORD,
+	payload: isRecord,
+} );
 
 const formatResults = ( array: Array<number> ): Array<number> => array.sort( ( a: number, b: number ) => a - b ).slice( 0, 6 );

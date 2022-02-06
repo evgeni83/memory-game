@@ -75,16 +75,6 @@ export const cardsReducer = ( state = initialState, action: CardsAction ): ICard
 
 			return { ...state, list };
 
-		case CardsActionsTypes.SHOW_ALL_HIDDEN:
-			return {
-				list: state.list.map( card => {
-					card.isHidden = false;
-					card.isOpen = false;
-					return card;
-				} ),
-				matchedCardsAmount: 0,
-			};
-
 		case CardsActionsTypes.OPEN:
 			const listWithOpenedCards = state.list.map( card => {
 				if ( action.payload === card.id ) {
@@ -95,23 +85,43 @@ export const cardsReducer = ( state = initialState, action: CardsAction ): ICard
 
 			return { ...state, list: listWithOpenedCards };
 
-		case CardsActionsTypes.CLOSE_ALL:
-			const listWithClosedCards = state.list.map( card => ( { ...card, isOpen: false } ) );
+		case CardsActionsTypes.CLOSE_OPENED:
+			const listWithClosedCards = [ ...state.list ];
+
+			action.payload.forEach( matchedCard => {
+				const index = listWithClosedCards.findIndex( card => card.id === matchedCard?.id );
+				if ( index < 0 ) {
+					return;
+				}
+				listWithClosedCards[ index ].isOpen = false;
+			} );
 
 			return { ...state, list: listWithClosedCards };
 
 		case CardsActionsTypes.HIDE_MATCHED:
-			const listWithHiddenCards = state.list.map( card => {
-					action.payload.forEach( match => {
-						if ( match?.id === card.id ) {
-							card.isHidden = true;
-						}
-					} );
-					return card;
-				} ),
-				matchedCardsAmount = state.list.filter( card => card.isHidden ).length;
+			const listWithHiddenCards = [ ...state.list ];
+
+			action.payload.forEach( matchedCard => {
+				const index = listWithHiddenCards.findIndex( card => card.id === matchedCard?.id );
+				if ( index < 0 ) {
+					return;
+				}
+				listWithHiddenCards[ index ].isHidden = true;
+			} );
+
+			const matchedCardsAmount: number = listWithHiddenCards.filter( card => card.isHidden ).length;
 
 			return { list: listWithHiddenCards, matchedCardsAmount };
+
+		case CardsActionsTypes.SHOW_ALL_HIDDEN:
+			return {
+				list: state.list.map( card => {
+					card.isHidden = false;
+					card.isOpen = false;
+					return card;
+				} ),
+				matchedCardsAmount: 0,
+			};
 
 		default:
 			return state;

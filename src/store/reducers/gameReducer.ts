@@ -16,7 +16,7 @@ export const gameReducer = ( state = initialState, action: GameAction ): IGameSt
 			return { ...state, isGameStarted: true, isGameOver: false };
 
 		case GameActionsTypes.STOP_GAME:
-			return { ...state, isGameStarted: false, isGameOver: true };
+			return { ...state, isGameStarted: false, isGameOver: !action.payload };
 
 		case GameActionsTypes.START_TIMER:
 			return { ...state, timerID: action.payload };
