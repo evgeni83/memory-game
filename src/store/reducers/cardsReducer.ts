@@ -99,8 +99,7 @@ export const cardsReducer = ( state = initialState, action: CardsAction ): ICard
 			return { ...state, list: listWithClosedCards };
 
 		case CardsActionsTypes.HIDE_MATCHED:
-			const listWithHiddenCards = [ ...state.list ],
-				matchedCardsAmount: number = state.list.filter( card => card.isHidden ).length;
+			const listWithHiddenCards = [ ...state.list ];
 
 			action.payload.forEach( matchedCard => {
 				const index = listWithHiddenCards.findIndex( card => card.id === matchedCard?.id );
@@ -109,6 +108,8 @@ export const cardsReducer = ( state = initialState, action: CardsAction ): ICard
 				}
 				listWithHiddenCards[ index ].isHidden = true;
 			} );
+
+			const matchedCardsAmount: number = listWithHiddenCards.filter( card => card.isHidden ).length;
 
 			return { list: listWithHiddenCards, matchedCardsAmount };
 

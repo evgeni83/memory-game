@@ -14,16 +14,17 @@ const CardsGrid: FC = () => {
 
 	useEffect( () => {
 		if ( match.length === 2 ) {
+			const isMatch =  match[ 0 ]?.img === match[ 1 ]?.img;
 			setTimeout( () => {
 				dispatch( cleanMatch() );
 
-				if ( match[ 0 ]?.img === match[ 1 ]?.img ) {
+				if ( isMatch ) {
 					dispatch( hideMatchedCards( match ) );
 				} else {
 					dispatch( closeOpenedCards( match ) );
 				}
 
-			}, 1000 );
+			}, isMatch ? 300 : 1000 );
 		}
 	}, [ match ] );
 

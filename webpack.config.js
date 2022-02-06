@@ -2,6 +2,7 @@ const path = require( 'path' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const TerserPlugin = require( 'terser-webpack-plugin' );
+const CopyPlugin = require("copy-webpack-plugin");
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
@@ -13,7 +14,7 @@ module.exports = {
 	entry: { app: path.resolve( __dirname, 'src', 'index.tsx' ) },
 	output: {
 		path: path.resolve( __dirname, 'dist' ),
-		filename: IS_DEV ? 'js/[name].js' : 'js/[name][fullhash:base64].js',
+		filename: IS_DEV ? 'js/[name].js' : 'js/[name]-[contenthash:base64].js',
 		clean: true,
 		publicPath: '/',
 	},
@@ -86,8 +87,16 @@ module.exports = {
 			template: path.resolve( __dirname, 'src', 'index.html' ),
 		} ),
 		new MiniCssExtractPlugin( {
-			filename: IS_DEV ? 'css/[name].css' : 'css/[name][fullhash:base64].css',
+			filename: IS_DEV ? 'css/[name].css' : 'css/[name]-[contenthash:base64].css',
 		} ),
+		new CopyPlugin({
+			patterns: [
+				{
+					from: path.resolve( __dirname, 'src', 'images', 'favicon' ),
+					to: path.resolve( __dirname, 'dist', 'images', 'favicon' ),
+				},
+			],
+		}),
 	],
 	optimization: {
 		minimize: !IS_DEV,

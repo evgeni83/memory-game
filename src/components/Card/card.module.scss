@@ -11,8 +11,9 @@
 	padding: 10px;
 	cursor: pointer;
 	user-select: none;
+	box-shadow: -2px 4px 10px -5px black;
 	transform: rotateY(180deg) scale(1);
-	transition: transform 0.2s;
+	transition: transform 0.2s, box-shadow 0.2s;
 
 	&::after {
 		content: "";
@@ -28,6 +29,7 @@
 	}
 
 	&.opened {
+		box-shadow: 2px 4px 10px -5px black;
 		transform: rotateY(0deg) scale(1);
 
 		&::after {
@@ -36,7 +38,10 @@
 	}
 
 	&.hidden {
-		transform: rotateY(0deg) scale(0);
+		animation-name: hide;
+		animation-duration: 0.2s;
+		animation-timing-function: linear;
+		animation-fill-mode: forwards;
 	}
 }
 
@@ -50,4 +55,20 @@
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+
+@keyframes hide {
+	0% {
+		filter: brightness(6);
+	}
+	50% {
+		filter: brightness(1);
+	}
+	75% {
+		filter: brightness(6);
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
 }

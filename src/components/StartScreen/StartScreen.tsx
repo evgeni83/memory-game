@@ -22,14 +22,10 @@ const StartScreen: FC = () => {
 	return (
 		<div className={ classes.wrapper }>
 			{ isGameOver && <>
-				<h1 className={ classes.title }>Congratulations! You win!</h1>
+				<h1 className={ classes.title }>You win!</h1>
 				<p className={ classes.time }>your { isRecord ? 'record ' : null }time is</p>
 				<Timer timer={ timer }/>
 			</> }
-			<button className={ classes.btn }
-					onClick={ clickHandler }
-			>{ isGameOver ? 'Play again' : 'Play' }
-			</button>
 			{ results.length > 0 && <>
 				<h2 className={ classes.resultsTitle }>your best results</h2>
 				<div className="last-results">
@@ -42,6 +38,10 @@ const StartScreen: FC = () => {
 					} ) }
 				</div>
 			</> }
+			<button className={ classes.btn }
+					onClick={ clickHandler }
+			>{ isGameOver ? 'Play again' : 'Play' }
+			</button>
 		</div>
 	);
 };
