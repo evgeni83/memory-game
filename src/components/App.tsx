@@ -1,11 +1,12 @@
 import React, { FC, useEffect } from 'react';
-import CardsGrid from './components/CardsGrid/CardsGrid';
+import CardsGrid from './CardsGrid/CardsGrid';
 import './App.scss';
-import Header from './components/Header/Header';
-import { useTypedSelector } from './hooks/useTypedSelector';
-import StartScreen from './components/StartScreen/StartScreen';
+import Header from './Header/Header';
+import { useTypedSelector } from '../hooks/useTypedSelector';
+import StartScreen from './StartScreen/StartScreen';
 import { useDispatch } from 'react-redux';
-import { getResults, stopGame } from './store/actions/gameActions';
+import { getResults, stopGame } from '../store/actions/gameActions';
+import Button from './Button/Button';
 
 const App: FC = () => {
 	const { isGameStarted, isGameOver } = useTypedSelector( state => state.game );
@@ -23,10 +24,17 @@ const App: FC = () => {
 		}
 	}, [ matchedCardsAmount ] );
 
+	const clickHandler = () => {
+		dispatch( stopGame( true ) )
+	}
+
 	return <div className={ 'App' }>
 		<Header/>
 		{ ( !isGameStarted || isGameOver ) && <StartScreen/> }
-		{ isGameStarted && !isGameOver && <CardsGrid/> }
+		{ isGameStarted && !isGameOver && <>
+			<CardsGrid/>
+			<Button clickHandler={ clickHandler }>Quit</Button>
+		</> }
 
 	</div>;
 };

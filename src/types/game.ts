@@ -24,6 +24,7 @@ export interface IStartGame {
 
 export interface IStopGame {
 	type: GameActionsTypes.STOP_GAME;
+	payload: boolean
 }
 
 export interface IStartTimer {

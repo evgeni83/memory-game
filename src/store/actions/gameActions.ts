@@ -1,4 +1,4 @@
-import { GameActionsTypes, ISetIsRecord, IStartTimer, IStopTimer } from '../../types/game';
+import { GameActionsTypes, ISetIsRecord, IStartTimer, IStopGame, IStopTimer } from '../../types/game';
 import { ThunkAction } from 'redux-thunk';
 import { AnyAction } from 'redux';
 import { RootState } from '../reducers';
@@ -19,13 +19,23 @@ export const startGame = (): ThunkAction<void, RootState, unknown, AnyAction> =>
 	dispatch( setIsRecord( false ) );
 };
 
-export const stopGame = (): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch, getState ) => {
+export const stopGame = ( isQuit: boolean = false ): ThunkAction<void, RootState, unknown, AnyAction> => ( dispatch, getState ) => {
 	const { timerID } = getState().game;
 	window.clearInterval( timerID );
-
 	dispatch( stopTimer() );
-	dispatch( updateResults() );
-	dispatch( { type: GameActionsTypes.STOP_GAME } );
+
+	if ( !isQuit ) {
+		dispatch( updateResults() );
+	} else {
+
+	}
+
+	const stopGameAction: IStopGame = {
+		type: GameActionsTypes.STOP_GAME,
+		payload: isQuit
+	}
+
+	dispatch( stopGameAction );
 };
 
 export const startTimer = ( timerID: number ): IStartTimer => ( {
