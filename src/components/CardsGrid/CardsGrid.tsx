@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import Card from '../Card/Card';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
-import { closeAllCards, hideMatchedCards } from '../../store/actions/cardsActions';
+import { closeOpenedCards, hideMatchedCards } from '../../store/actions/cardsActions';
 import { cleanMatch } from '../../store/actions/matchActions';
 
 import classes from './cardsGrid.module.scss';
@@ -20,7 +20,7 @@ const CardsGrid: FC = () => {
 				if ( match[ 0 ]?.img === match[ 1 ]?.img ) {
 					dispatch( hideMatchedCards( match ) );
 				} else {
-					dispatch( closeAllCards() );
+					dispatch( closeOpenedCards( match ) );
 				}
 
 			}, 1000 );

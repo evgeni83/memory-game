@@ -3,7 +3,7 @@ import { IMatchState } from './match';
 export enum CardsActionsTypes {
 	SHUFFLE = 'SHUFFLE',
 	OPEN = 'OPEN',
-	CLOSE_ALL = 'CLOSE_ALL',
+	CLOSE_OPENED = 'CLOSE_OPENED',
 	HIDE_MATCHED = 'HIDE_MATCHED',
 	SHOW_ALL_HIDDEN = 'SHOW_ALL_HIDDEN',
 }
@@ -20,31 +20,32 @@ export interface ICard {
 	isHidden: boolean;
 }
 
-interface IShuffleCardsAction {
+export interface IShuffleCards {
 	type: CardsActionsTypes.SHUFFLE;
 }
 
-interface IOpenCardAction {
+export interface IOpenCard {
 	type: CardsActionsTypes.OPEN;
 	payload: number;
 }
 
-interface IHideMatchedAction {
+export interface IHideMatched {
 	type: CardsActionsTypes.HIDE_MATCHED;
 	payload: IMatchState;
 }
 
-interface ICloseAllAction {
-	type: CardsActionsTypes.CLOSE_ALL;
+export interface ICloseOpened {
+	type: CardsActionsTypes.CLOSE_OPENED;
+	payload: IMatchState;
 }
 
-interface IShowAllHiddenAction {
+export interface IShowAllHidden {
 	type: CardsActionsTypes.SHOW_ALL_HIDDEN;
 }
 
 export type CardsAction =
-	IShuffleCardsAction
-	| IOpenCardAction
-	| IHideMatchedAction
-	| ICloseAllAction
-	| IShowAllHiddenAction;
+	IShuffleCards
+	| IOpenCard
+	| IHideMatched
+	| ICloseOpened
+	| IShowAllHidden;

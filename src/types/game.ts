@@ -18,40 +18,39 @@ export interface IGameState {
 	isRecord: boolean
 }
 
-interface IStartGame {
+export interface IStartGame {
 	type: GameActionsTypes.START_GAME;
 }
 
-interface IStopGame {
+export interface IStopGame {
 	type: GameActionsTypes.STOP_GAME;
 }
 
-interface IStartTimer {
+export interface IStartTimer {
 	type: GameActionsTypes.START_TIMER;
 	payload: number;
 }
 
-interface IUpdateTimer {
+export interface IUpdateTimer {
 	type: GameActionsTypes.UPDATE_TIMER;
 	payload: number;
 }
 
-interface IStopTimer {
+export interface IStopTimer {
 	type: GameActionsTypes.STOP_TIMER;
-	payload: number;
 }
 
-interface IGetResults {
+export interface IGetResults {
 	type: GameActionsTypes.GET_RESULTS;
 	payload: Array<number>;
 }
 
-interface IUpdateResults {
+export interface IUpdateResults {
 	type: GameActionsTypes.UPDATE_RESULTS;
 	payload: Array<number>;
 }
 
-interface ISetIsRecord {
+export interface ISetIsRecord {
 	type: GameActionsTypes.SET_IS_RECORD;
 	payload: boolean;
 }
