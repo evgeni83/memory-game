@@ -10,5 +10,4 @@
 	grid-template-columns: repeat(6, 1fr);
 	grid-template-rows: repeat(6, calc((100% - 50px) / 6));
 	grid-gap: 10px;
-	perspective: 1000px;
 }
