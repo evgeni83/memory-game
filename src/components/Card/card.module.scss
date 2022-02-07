@@ -1,38 +1,25 @@
 .item {
 	position: relative;
-	z-index: 2;
-	visibility: visible;
-	display: flex;
-	align-items: center;
-	justify-content: center;
 	border: none;
-	border-radius: 5px;
-	overflow: hidden;
-	padding: 10px;
+	padding: 0;
 	cursor: pointer;
 	user-select: none;
-	box-shadow: -2px 4px 10px -5px black;
-	transform: rotateY(180deg) scale(1);
-	transition: transform 0.2s, box-shadow 0.2s;
-
-	&::after {
-		content: "";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: mediumseagreen;
-		transform: rotateY(0deg);
-		backface-visibility: hidden;
-		transition: transform 0.2s;
-	}
+	perspective: 200px;
+	background-color: transparent;
 
 	&.opened {
-		box-shadow: 2px 4px 10px -5px black;
-		transform: rotateY(0deg) scale(1);
+		.front,
+		.back {
+			transition: transform 0.3s, box-shadow 0.3s;
+		}
 
-		&::after {
+		.front {
+			box-shadow: 2px 4px 10px -5px black;
+			transform: rotateY(0deg);
+		}
+
+		.back {
+			box-shadow: -2px 4px 10px -5px black;
 			transform: rotateY(180deg);
 		}
 	}
@@ -45,15 +32,36 @@
 	}
 }
 
-
-.imgWrap {
+.front,
+.back {
+	position: absolute;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: 100%;
+	backface-visibility: hidden;
+	overflow: hidden;
+	border-radius: 5px;
+	transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.front {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: -2px 4px 10px -5px black;
+	transform: rotateY(-180deg);
+}
+
+.back {
+	background-color: mediumseagreen;
+	box-shadow: 2px 4px 10px -5px black;
+	transform: rotateY(0);
 }
 
 .img {
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
 	object-fit: contain;
 }
 

@@ -33,16 +33,16 @@ const Card: FC<ICardProps> = ( { item } ) => {
 		dispatch( addToMatch( item ) );
 	};
 
-	return <button
-		className={ classNames.join( ' ' ) }
-		onClick={ () => {
+	return (
+		<button className={ classNames.join( ' ' )} onClick={ () => {
 			clickHandler( item.id );
-		} }
-	>
-        <span className={ classes.imgWrap }>
-            <img className={ classes.img } src={ item.img } alt="icon"/>
-        </span>
-	</button>;
+		} }>
+			<div className={ classes.front }>
+				<img className={ classes.img } src={ item.img } alt="icon"/>
+			</div>
+			<div className={ classes.back }/>
+		</button>
+	);
 };
 
 export default Card;
