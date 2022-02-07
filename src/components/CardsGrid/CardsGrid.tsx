@@ -14,7 +14,7 @@ const CardsGrid: FC = () => {
 
 	useEffect( () => {
 		if ( match.length === 2 ) {
-			const isMatch =  match[ 0 ]?.img === match[ 1 ]?.img;
+			const isMatch = match[ 0 ]?.img === match[ 1 ]?.img;
 			setTimeout( () => {
 				dispatch( cleanMatch() );
 
@@ -30,7 +30,7 @@ const CardsGrid: FC = () => {
 
 	return (
 		<div className={ classes.cardsGrid }>
-			{ list.map( item => <Card key={ item.id } item={ item }/> ) }
+			{ list.map( ( item, index ) => <Card key={ item.id } item={ item } index={ index }/> ) }
 		</div>
 	);
 };

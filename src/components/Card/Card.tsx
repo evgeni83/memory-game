@@ -4,18 +4,34 @@ import { useDispatch } from 'react-redux';
 import { openCard } from '../../store/actions/cardsActions';
 import { addToMatch } from '../../store/actions/matchActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
+import { animated, useSpring } from 'react-spring';
 
 import classes from './card.module.scss';
 
 interface ICardProps {
 	item: ICard;
+	index: number;
 }
 
 
-const Card: FC<ICardProps> = ( { item } ) => {
+const Card: FC<ICardProps> = ( { item, index } ) => {
 
 	const match = useTypedSelector( state => state.match );
 	const dispatch = useDispatch();
+	const props = useSpring( {
+		from: {
+			opacity: 0,
+			transform: 'scale(0.8)'
+		},
+		to: {
+			opacity: 1,
+			transform: 'scale(1)'
+		},
+		config: {
+			duration: 500
+		},
+		delay: index * 20,
+	} );
 
 	const classNames: Array<string> = [ classes.item ];
 
@@ -34,14 +50,14 @@ const Card: FC<ICardProps> = ( { item } ) => {
 	};
 
 	return (
-		<button className={ classNames.join( ' ' )} onClick={ () => {
+		<animated.button style={ props } className={ classNames.join( ' ' ) } onClick={ () => {
 			clickHandler( item.id );
 		} }>
 			<div className={ classes.front }>
 				<img className={ classes.img } src={ item.img } alt="icon"/>
 			</div>
 			<div className={ classes.back }/>
-		</button>
+		</animated.button>
 	);
 };
 
