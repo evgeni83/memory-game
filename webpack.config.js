@@ -16,7 +16,6 @@ module.exports = {
 		path: path.resolve( __dirname, 'dist' ),
 		filename: IS_DEV ? 'js/[name].js' : 'js/[name]-[contenthash:base64].js',
 		clean: true,
-		publicPath: '/',
 	},
 	devServer: {
 		port: 3333,

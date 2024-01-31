@@ -1,27 +1,19 @@
-import { IMatchState, MatchAction, MatchActionsTypes } from '../../types/match';
+import { IMatchState } from '../../types/match';
+import { createReducer } from '@reduxjs/toolkit';
+import { addToMatch, cleanMatch } from '../actions/matchActions';
 
 const initialState: IMatchState = [];
 
-export const matchReducer = ( state = initialState, action: MatchAction ): IMatchState => {
-	switch ( action.type ) {
-		case MatchActionsTypes.ADD_CARD:
+export const matchReducer = createReducer( initialState, ( builder ) => {
+	builder
+		.addCase( addToMatch, ( state, action ) => {
 			if ( state.length === 0 ) {
-				return [ action.payload ];
+				state.push( action.payload );
+			} else if ( state.length === 1 && state[ 0 ]?.id !== action.payload.id ) {
+				state.push( action.payload );
 			}
-
-			if ( state.length === 1 ) {
-				if ( state[ 0 ]?.id === action.payload.id ) {
-					return [ ...state ];
-				}
-				return [ state[ 0 ], action.payload ];
-			}
-
-			return [ ...state ];
-
-		case MatchActionsTypes.CLEAN:
+		} )
+		.addCase( cleanMatch, () => {
 			return [];
-
-		default:
-			return state;
-	}
-};
+		});
+} );

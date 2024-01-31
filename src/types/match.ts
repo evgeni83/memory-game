@@ -6,14 +6,3 @@ export enum MatchActionsTypes {
 }
 
 export type IMatchState = [ ICard?, ICard? ]
-
-export interface IAddCardToMatch {
-	type: MatchActionsTypes.ADD_CARD;
-	payload: ICard;
-}
-
-export interface ICleanMatch {
-	type: MatchActionsTypes.CLEAN;
-}
-
-export type MatchAction = IAddCardToMatch | ICleanMatch;

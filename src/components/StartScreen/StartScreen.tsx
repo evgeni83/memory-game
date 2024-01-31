@@ -1,16 +1,24 @@
 import React, { FC, useEffect } from 'react';
 import classes from './start-screen.module.scss';
 import { useDispatch } from 'react-redux';
-import { setIsRecord, startGame } from '../../store/actions/gameActions';
+import { setIsRecord, startGame, startTimer, updateTimer } from '../../store/actions/gameActions';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Timer from '../Timer/Timer';
 import Button from '../Button/Button';
+import { showAllHiddenCards } from '../../store/actions/cardsActions';
 
 const StartScreen: FC = () => {
 	const dispatch = useDispatch();
-	const { isGameOver, results, timer, isRecord } = useTypedSelector( state => state.game );
+	const { isGameOver, results, timer, isRecord, lastTime } = useTypedSelector( state => state.game );
 
 	const clickHandler = () => {
+		dispatch( showAllHiddenCards() );
+		dispatch( updateTimer( 0 ) );
+		const timerID = window.setInterval( () => {
+			dispatch( updateTimer() );
+		}, 1000 );
+		dispatch( startTimer( timerID ) );
+		dispatch( setIsRecord( false ) );
 		dispatch( startGame() );
 	};
 
@@ -25,7 +33,7 @@ const StartScreen: FC = () => {
 			{ isGameOver && <>
 				<h1 className={ classes.title }>You win!</h1>
 				<p className={ classes.time }>your { isRecord ? 'record ' : null }time is</p>
-				<Timer timer={ timer }/>
+				<Timer timer={ lastTime }/>
 			</> }
 			{ results.length > 0 && <>
 				<h2 className={ classes.resultsTitle }>your best results</h2>

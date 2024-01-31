@@ -1,4 +1,12 @@
-import { CardsAction, CardsActionsTypes, ICardsState } from '../../types/cards';
+import { createReducer } from '@reduxjs/toolkit';
+import {
+	closeOpenedCards,
+	hideMatchedCards,
+	openCard,
+	showAllHiddenCards,
+	shuffleCards,
+} from '../actions/cardsActions';
+import { ICardsState } from '../../types/cards';
 
 import img_1 from '../../images/001-flat.png';
 import img_2 from '../../images/001-viburnum-fruit.png';
@@ -61,69 +69,48 @@ let initialState: ICardsState = {
 	matchedCardsAmount: 0,
 };
 
-export const cardsReducer = ( state = initialState, action: CardsAction ): ICardsState => {
-	switch ( action.type ) {
-		case CardsActionsTypes.SHUFFLE:
+export const cardsReducer = createReducer( initialState, ( builder ) => {
+	builder
+		.addCase( shuffleCards, ( state ) => {
 			let currentIndex = state.list.length, randomIndex, { list } = state;
-
 			while ( currentIndex != 0 ) {
 				randomIndex = Math.floor( Math.random() * currentIndex );
 				currentIndex--;
-				[ list[ currentIndex ], list[ randomIndex ] ] = [
-					list[ randomIndex ], list[ currentIndex ] ];
+				[ list[ currentIndex ], list[ randomIndex ] ] = [ list[ randomIndex ], list[ currentIndex ] ];
 			}
-
-			return { ...state, list };
-
-		case CardsActionsTypes.OPEN:
-			const listWithOpenedCards = state.list.map( card => {
+		} )
+		.addCase( openCard, ( state, action ) => {
+			state.list.forEach( card => {
 				if ( action.payload === card.id ) {
-					return { ...card, isOpen: true };
+					card.isOpen = true;
 				}
-				return card;
 			} );
-
-			return { ...state, list: listWithOpenedCards };
-
-		case CardsActionsTypes.CLOSE_OPENED:
-			const listWithClosedCards = [ ...state.list ];
-
+		} )
+		.addCase( closeOpenedCards, ( state, action ) => {
 			action.payload.forEach( matchedCard => {
-				const index = listWithClosedCards.findIndex( card => card.id === matchedCard?.id );
+				const index = state.list.findIndex( card => card.id === matchedCard?.id );
 				if ( index < 0 ) {
 					return;
 				}
-				listWithClosedCards[ index ].isOpen = false;
+				state.list[ index ].isOpen = false;
 			} );
-
-			return { ...state, list: listWithClosedCards };
-
-		case CardsActionsTypes.HIDE_MATCHED:
-			const listWithHiddenCards = [ ...state.list ];
-
+		} )
+		.addCase( hideMatchedCards, ( state, action ) => {
 			action.payload.forEach( matchedCard => {
-				const index = listWithHiddenCards.findIndex( card => card.id === matchedCard?.id );
+				const index = state.list.findIndex( card => card.id === matchedCard?.id );
 				if ( index < 0 ) {
 					return;
 				}
-				listWithHiddenCards[ index ].isHidden = true;
+				state.list[ index ].isHidden = true;
 			} );
 
-			const matchedCardsAmount: number = listWithHiddenCards.filter( card => card.isHidden ).length;
-
-			return { list: listWithHiddenCards, matchedCardsAmount };
-
-		case CardsActionsTypes.SHOW_ALL_HIDDEN:
-			return {
-				list: state.list.map( card => {
-					card.isHidden = false;
-					card.isOpen = false;
-					return card;
-				} ),
-				matchedCardsAmount: 0,
-			};
-
-		default:
-			return state;
-	}
-};
+			state.matchedCardsAmount = state.list.filter( card => card.isHidden ).length;
+		} )
+		.addCase( showAllHiddenCards, ( state ) => {
+			state.list.forEach( card => {
+				card.isHidden = false;
+				card.isOpen = false;
+			} );
+			state.matchedCardsAmount = 0;
+		} );
+} );

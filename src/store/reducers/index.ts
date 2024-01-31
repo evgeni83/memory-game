@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from '@reduxjs/toolkit';
 import { cardsReducer } from './cardsReducer';
 import { matchReducer } from './matchReducer';
 import { gameReducer } from './gameReducer';
