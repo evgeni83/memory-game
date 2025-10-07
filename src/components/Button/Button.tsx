@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import React, { ComponentProps, FC, MouseEventHandler } from 'react';
 import classes from './button.module.scss';
 
-interface IButtonProps extends ComponentProps<any> {
+interface IButtonProps extends ComponentProps<'button'> {
 	clickHandler: MouseEventHandler;
 }
 

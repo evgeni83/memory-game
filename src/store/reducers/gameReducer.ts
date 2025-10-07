@@ -48,10 +48,14 @@ export const gameReducer = createReducer( initialState, ( builder ) => {
 			state.timerID = 0;
 		} )
 		.addCase( getResults, ( state ) => {
-			const storedResults = localStorage.getItem( 'memoryGameResults' );
-
-			if ( storedResults ) {
-				state.results = formatResults( JSON.parse( storedResults ) );
+			try {
+				const storedResults = localStorage.getItem( 'memoryGameResults' );
+				if ( storedResults ) {
+					state.results = formatResults( JSON.parse( storedResults ) );
+				}
+			} catch (e) {
+				// Ignore storage errors (e.g., private mode)
+				state.results = [];
 			}
 		} )
 		.addCase( updateResults, ( state ) => {
@@ -63,7 +67,11 @@ export const gameReducer = createReducer( initialState, ( builder ) => {
 
 				const updatedResults = formatResults( results );
 
-				window.localStorage.setItem( 'memoryGameResults', JSON.stringify( updatedResults ) );
+				try {
+					window.localStorage.setItem( 'memoryGameResults', JSON.stringify( updatedResults ) );
+				} catch (e) {
+					// Ignore storage errors
+				}
 
 				state.results = updatedResults;
 			}

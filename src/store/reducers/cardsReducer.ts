@@ -8,24 +8,24 @@ import {
 } from '../actions/cardsActions';
 import { ICardsState } from '../../types/cards';
 
-import img_1 from '../../images/001-flat.png';
-import img_2 from '../../images/001-viburnum-fruit.png';
-import img_3 from '../../images/002-oranges.png';
-import img_4 from '../../images/002-organic.png';
-import img_5 from '../../images/003-organic.png';
-import img_6 from '../../images/003-raspberry-pi.png';
-import img_7 from '../../images/004-vegetables.png';
-import img_8 from '../../images/004-viburnum-fruit.png';
-import img_9 from '../../images/005-healthy-food.png';
-import img_10 from '../../images/005-vegetables.png';
-import img_11 from '../../images/006-healthy.png';
-import img_12 from '../../images/006-vegetal-oil.png';
-import img_13 from '../../images/007-organic-1.png';
-import img_14 from '../../images/008-fattening.png';
-import img_15 from '../../images/008-organic-2.png';
-import img_16 from '../../images/009-cucumbers.png';
-import img_17 from '../../images/009-organic-2.png';
-import img_18 from '../../images/010-healthy-food-1.png';
+const img_1 = '/images/001-flat.png';
+const img_2 = '/images/001-viburnum-fruit.png';
+const img_3 = '/images/002-oranges.png';
+const img_4 = '/images/002-organic.png';
+const img_5 = '/images/003-organic.png';
+const img_6 = '/images/003-raspberry-pi.png';
+const img_7 = '/images/004-vegetables.png';
+const img_8 = '/images/004-viburnum-fruit.png';
+const img_9 = '/images/005-healthy-food.png';
+const img_10 = '/images/005-vegetables.png';
+const img_11 = '/images/006-healthy.png';
+const img_12 = '/images/006-vegetal-oil.png';
+const img_13 = '/images/007-organic-1.png';
+const img_14 = '/images/008-fattening.png';
+const img_15 = '/images/008-organic-2.png';
+const img_16 = '/images/009-cucumbers.png';
+const img_17 = '/images/009-organic-2.png';
+const img_18 = '/images/010-healthy-food-1.png';
 
 let initialState: ICardsState = {
 	list: [

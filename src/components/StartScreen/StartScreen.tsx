@@ -22,12 +22,6 @@ const StartScreen: FC = () => {
 		dispatch( startGame() );
 	};
 
-	useEffect( () => {
-		if ( results[ 0 ] === timer ) {
-			dispatch( setIsRecord( true ) );
-		}
-	}, [] );
-
 	return (
 		<div className={ classes.wrapper }>
 			{ isGameOver && <>

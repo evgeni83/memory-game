@@ -28,6 +28,9 @@ const Card: FC<ICardProps> = ( { item } ) => {
 	}
 
 	const clickHandler = ( id: number ) => {
+		// Prevent interaction with already opened or hidden cards
+		if ( item.isHidden || item.isOpen ) return;
+
 		if ( match.length >= 2 ) {
 			dispatch( closeOpenedCards( match ) );
 			dispatch( cleanMatch() );
@@ -38,9 +41,11 @@ const Card: FC<ICardProps> = ( { item } ) => {
 	};
 
 	return (
-		<button className={ classNames.join( ' ' ) } onClick={ () => {
-			clickHandler( item.id );
-		} }>
+		<button className={ classNames.join( ' ' ) }
+			disabled={ item.isHidden || item.isOpen }
+			onClick={ () => {
+				clickHandler( item.id );
+			} }>
 			<div className={ classes.front }>
 				<img className={ classes.img } src={ item.img } alt="icon"/>
 			</div>

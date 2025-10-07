@@ -9,7 +9,7 @@ const IS_DEV = process.env.NODE_ENV === 'development';
 module.exports = {
 	mode: process.env.NODE_ENV || 'development',
 	resolve: {
-		extensions: [ '.js', '.jsx', '.ts', '.tsx', 'json' ],
+		extensions: [ '.js', '.jsx', '.ts', '.tsx', '.json' ],
 	},
 	entry: { app: path.resolve( __dirname, 'src', 'index.tsx' ) },
 	output: {
@@ -21,6 +21,7 @@ module.exports = {
 		port: 3333,
 		open: true,
 		hot: true,
+		static: path.resolve(__dirname, 'public'),
 	},
 	devtool: IS_DEV ? 'source-map' : false,
 	module: {
@@ -91,8 +92,8 @@ module.exports = {
 		new CopyPlugin({
 			patterns: [
 				{
-					from: path.resolve( __dirname, 'src', 'images', 'favicon' ),
-					to: path.resolve( __dirname, 'dist', 'images', 'favicon' ),
+					from: path.resolve( __dirname, 'public' ),
+					to: path.resolve( __dirname, 'dist' ),
 				},
 			],
 		}),

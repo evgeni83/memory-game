@@ -25,7 +25,7 @@ const App: FC = () => {
 			dispatch( stopGame( false ) );
 			dispatch( updateResults() );
 			dispatch( setLastTime( timer ) );
-			if ( results[ 0 ] > timer ) {
+			if ( results.length === 0 || timer < results[ 0 ] ) {
 				dispatch( setIsRecord( true ) );
 			}
 			dispatch( stopTimer() );
