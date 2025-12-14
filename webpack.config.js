@@ -5,10 +5,12 @@ const TerserPlugin = require( 'terser-webpack-plugin' );
 const CopyPlugin = require("copy-webpack-plugin");
 
 const IS_DEV = process.env.NODE_ENV === 'development';
-
+const ANALYZE = process.env.ANALYZE === 'true';
 const GH_PAGES = process.env.GH_PAGES === 'true';
 
-module.exports = {
+const BundleAnalyzerPlugin = ANALYZE ? require('webpack-bundle-analyzer').BundleAnalyzerPlugin : null;
+
+const config = {
 	mode: process.env.NODE_ENV || 'development',
 	resolve: {
 		extensions: [ '.js', '.jsx', '.ts', '.tsx', '.json' ],
@@ -100,6 +102,7 @@ module.exports = {
 				},
 			],
 		}),
+		...(ANALYZE ? [new BundleAnalyzerPlugin()] : []),
 	],
 	optimization: {
 		minimize: !IS_DEV,
@@ -113,12 +116,30 @@ module.exports = {
 		} ) ],
 		splitChunks: {
 			cacheGroups: {
-				commons: {
+				vendor: {
 					test: /[\\/]node_modules[\\/]/,
 					name: 'vendors',
 					chunks: 'all',
+					priority: 10,
+					reuseExistingChunk: true,
+				},
+				react: {
+					test: /[\\/]node_modules[\\/](react|react-dom|react-redux|@reduxjs\/toolkit)[\\/]/,
+					name: 'react',
+					chunks: 'all',
+					priority: 20,
+					reuseExistingChunk: true,
+				},
+				framer: {
+					test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+					name: 'framer-motion',
+					chunks: 'all',
+					priority: 15,
+					reuseExistingChunk: true,
 				},
 			},
 		},
 	},
 };
+
+module.exports = config;
