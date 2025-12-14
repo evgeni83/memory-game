@@ -5,7 +5,7 @@ import store from './store';
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary';
 import { setupGlobalErrorHandler } from './utils/errorHandler';
 
-// Инициализируем глобальный обработчик ошибок
+// Initialize global error handler
 setupGlobalErrorHandler();
 
 const root = createRoot( document.getElementById( 'root' )! );

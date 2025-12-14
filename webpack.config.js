@@ -10,7 +10,7 @@ const GH_PAGES = process.env.GH_PAGES === 'true';
 
 const BundleAnalyzerPlugin = ANALYZE ? require('webpack-bundle-analyzer').BundleAnalyzerPlugin : null;
 
-// Заголовки безопасности
+// Security headers
 const securityHeaders = [
   {
     key: 'X-Content-Type-Options',
@@ -48,7 +48,7 @@ const config = {
 		hot: true,
 		static: path.resolve(__dirname, 'public'),
 		setupMiddlewares: (middlewares, devServer) => {
-			// Добавляем заголовки безопасности
+			// Add security headers
 			middlewares.unshift((req, res, next) => {
 				securityHeaders.forEach(header => {
 					res.setHeader(header.key, header.value);

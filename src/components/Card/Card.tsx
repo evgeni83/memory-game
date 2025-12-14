@@ -43,22 +43,22 @@ const Card = React.memo<ICardProps>(({ item }) => {
 		classNames.push(classes.hidden);
 	}
 
-	// Обновляем src при изменении item
+	// Update src when item changes
 	useEffect(() => {
-		let isMounted = true; // Флаг для отслеживания, что компонент все еще смонтирован
+		let isMounted = true; // Flag to track if component is still mounted
 
-		// Асинхронно определяем подходящий путь к изображению
+		// Asynchronously determine the appropriate image path
 		const setImage = async () => {
 			try {
 				const path = await getImagePath(item.img);
 
-				// Обновляем состояние только если компонент все еще смонтирован
+				// Update state only if component is still mounted
 				if (isMounted) {
 					setImageSrc(path);
-					setImgLoaded(false); // Сбрасываем состояние загрузки при изменении изображения
+					setImgLoaded(false); // Reset loading state when image changes
 				}
 			} catch (error) {
-				// Если возникла ошибка при определении пути, используем оригинальный путь
+				// If there's an error determining the path, use the original path
 				if (isMounted) {
 					setImageSrc(item.img);
 					setImgLoaded(false);
@@ -68,7 +68,7 @@ const Card = React.memo<ICardProps>(({ item }) => {
 
 		setImage();
 
-		// Очищаем флаг при размонтировании
+		// Clear flag on unmount
 		return () => {
 			isMounted = false;
 		};
@@ -87,16 +87,16 @@ const Card = React.memo<ICardProps>(({ item }) => {
 		}
 	};
 
-	// Обработчик успешной загрузки изображения
+	// Handler for successful image load
 	const handleImageLoad = useCallback(() => {
 		setImgLoaded(true);
 		setImgHasError(false);
 	}, []);
 
-	// Обработчик ошибки загрузки изображения
+	// Handler for image loading error
 	const handleImageError = useCallback(() => {
 		setImgHasError(true);
-		// Если WebP не загрузился, возвращаемся к PNG
+		// If WebP fails to load, fall back to original image
 		setImageSrc(item.img);
 	}, [item.img]);
 
