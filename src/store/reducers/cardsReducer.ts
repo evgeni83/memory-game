@@ -8,24 +8,25 @@ import {
 } from '../actions/cardsActions';
 import { ICardsState } from '../../types/cards';
 
-const img_1 = '/images/001-flat.png';
-const img_2 = '/images/001-viburnum-fruit.png';
-const img_3 = '/images/002-oranges.png';
-const img_4 = '/images/002-organic.png';
-const img_5 = '/images/003-organic.png';
-const img_6 = '/images/003-raspberry-pi.png';
-const img_7 = '/images/004-vegetables.png';
-const img_8 = '/images/004-viburnum-fruit.png';
-const img_9 = '/images/005-healthy-food.png';
-const img_10 = '/images/005-vegetables.png';
-const img_11 = '/images/006-healthy.png';
-const img_12 = '/images/006-vegetal-oil.png';
-const img_13 = '/images/007-organic-1.png';
-const img_14 = '/images/008-fattening.png';
-const img_15 = '/images/008-organic-2.png';
-const img_16 = '/images/009-cucumbers.png';
-const img_17 = '/images/009-organic-2.png';
-const img_18 = '/images/010-healthy-food-1.png';
+const imagePath = process.env.NODE_ENV === 'production' && typeof window !== 'undefined' ? './' : '/'
+const img_1 = imagePath + 'images/001-flat.png';
+const img_2 = imagePath + 'images/001-viburnum-fruit.png';
+const img_3 = imagePath + 'images/002-oranges.png';
+const img_4 = imagePath + 'images/002-organic.png';
+const img_5 = imagePath + 'images/003-organic.png';
+const img_6 = imagePath + 'images/003-raspberry-pi.png';
+const img_7 = imagePath + 'images/004-vegetables.png';
+const img_8 = imagePath + 'images/004-viburnum-fruit.png';
+const img_9 = imagePath + 'images/005-healthy-food.png';
+const img_10 = imagePath + 'images/005-vegetables.png';
+const img_11 = imagePath + 'images/006-healthy.png';
+const img_12 = imagePath + 'images/006-vegetal-oil.png';
+const img_13 = imagePath + 'images/007-organic-1.png';
+const img_14 = imagePath + 'images/008-fattening.png';
+const img_15 = imagePath + 'images/008-organic-2.png';
+const img_16 = imagePath + 'images/009-cucumbers.png';
+const img_17 = imagePath + 'images/009-organic-2.png';
+const img_18 = imagePath + 'images/010-healthy-food-1.png';
 
 let initialState: ICardsState = {
 	list: [
