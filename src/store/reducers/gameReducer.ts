@@ -1,5 +1,5 @@
 import { IGameState } from '../../types/game';
-import { createReducer } from '@reduxjs/toolkit';
+import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import {
 	getResults,
 	setIsRecord, setLastTime,
@@ -11,7 +11,7 @@ import {
 	updateTimer,
 } from '../actions/gameActions';
 
-const initialState: IGameState = {
+const createInitialGameState = (): IGameState => ({
 	isGameStarted: false,
 	isGameOver: false,
 	timer: 0,
@@ -19,95 +19,114 @@ const initialState: IGameState = {
 	timerID: 0,
 	results: [],
 	isRecord: false,
+});
+
+const formatResults = (array: number[]): number[] => {
+	try {
+		return array.sort((a, b) => a - b).slice(0, 10); // Сохраняем топ-10 результатов
+	} catch (error) {
+		console.error('Error formatting results:', error);
+		return [];
+	}
 };
 
-const formatResults = ( array: Array<number> ): Array<number> => array.sort( ( a: number, b: number ) => a - b ).slice( 0, 6 );
-
-export const gameReducer = createReducer( initialState, ( builder ) => {
-	builder
-		.addCase( startGame, ( state ) => {
-			state.isGameStarted = true;
-			state.isGameOver = false;
-		} )
-		.addCase( stopGame, ( state, action ) => {
-			state.isGameStarted = false;
-			state.isGameOver = !action.payload;
-			clearInterval( state.timerID );
-		} )
-		.addCase( startTimer, ( state, action ) => {
-			state.timerID = action.payload;
-		} )
-		.addCase( updateTimer, ( state, action ) => {
-			state.timer = action.payload === 0 ? 0 : state.timer + 1;
-		} )
-		.addCase( setLastTime, ( state, action ) => {
-			state.lastTime = action.payload;
-		})
-		.addCase( stopTimer, ( state ) => {
-			state.timer = 0;
-			state.timerID = 0;
-		} )
-		.addCase( getResults, ( state ) => {
-			try {
-				const storedResults = localStorage.getItem( 'memoryGameResults' );
-				if ( storedResults ) {
-					state.results = formatResults( JSON.parse( storedResults ) );
-				}
-			} catch (e) {
-				// Ignore storage errors (e.g., private mode)
-				state.results = [];
-			}
-		} )
-		.addCase( updateResults, ( state ) => {
-			const { results, timer } = state;
-			const resultsHaveCurrentValue = results.findIndex( result => result === timer ) >= 0;
-
-			if ( !resultsHaveCurrentValue ) {
-				results.push( timer );
-
-				const updatedResults = formatResults( results );
-
+export const gameReducer = createReducer(
+	createInitialGameState(),
+	(builder) => {
+		builder
+			.addCase(startGame, (state) => {
 				try {
-					window.localStorage.setItem( 'memoryGameResults', JSON.stringify( updatedResults ) );
-				} catch (e) {
-					// Ignore storage errors
+					state.isGameStarted = true;
+					state.isGameOver = false;
+				} catch (error) {
+					console.error('Error in startGame reducer:', error);
 				}
+			})
+			.addCase(stopGame, (state, action: PayloadAction<boolean>) => {
+				try {
+					state.isGameStarted = false;
+					state.isGameOver = !action.payload;
+					if (state.timerID) {
+						clearInterval(state.timerID);
+					}
+				} catch (error) {
+					console.error('Error in stopGame reducer:', error);
+				}
+			})
+			.addCase(startTimer, (state, action: PayloadAction<number>) => {
+				try {
+					state.timerID = action.payload;
+				} catch (error) {
+					console.error('Error in startTimer reducer:', error);
+				}
+			})
+			.addCase(updateTimer, (state, action: PayloadAction<number | undefined>) => {
+				try {
+					state.timer = action.payload === 0 ? 0 : state.timer + 1;
+				} catch (error) {
+					console.error('Error in updateTimer reducer:', error);
+				}
+			})
+			.addCase(setLastTime, (state, action: PayloadAction<number>) => {
+				try {
+					state.lastTime = action.payload;
+				} catch (error) {
+					console.error('Error in setLastTime reducer:', error);
+				}
+			})
+			.addCase(stopTimer, (state) => {
+				try {
+					if (state.timerID) {
+						clearInterval(state.timerID);
+					}
+					state.timer = 0;
+					state.timerID = 0;
+				} catch (error) {
+					console.error('Error in stopTimer reducer:', error);
+				}
+			})
+			.addCase(getResults, (state) => {
+				try {
+					const storedResults = localStorage.getItem('memoryGameResults');
+					if (storedResults) {
+						const parsedResults = JSON.parse(storedResults);
+						if (Array.isArray(parsedResults)) {
+							state.results = formatResults(parsedResults);
+						}
+					}
+				} catch (error) {
+					console.error('Storage error in getResults:', error);
+					// Возвращаем пустой массив при ошибках доступа к storage
+					state.results = [];
+				}
+			})
+			.addCase(updateResults, (state) => {
+				try {
+					const { results, timer } = state;
+					const resultsHaveCurrentValue = results.some(result => result === timer);
 
-				state.results = updatedResults;
-			}
-		} )
-		.addCase( setIsRecord, ( state, action ) => {
-			state.isRecord = action.payload;
-		} );
-} );
-// action: GameAction ): IGameState => {
-// 	switch ( action.type ) {
-//
-// 		case GameActionsTypes.START_GAME:
-// 			return { ...state, isGameStarted: true, isGameOver: false };
-//
-// 		case GameActionsTypes.STOP_GAME:
-// 			return { ...state, isGameStarted: false, isGameOver: !action.payload };
-//
-// 		case GameActionsTypes.START_TIMER:
-// 			return { ...state, timerID: action.payload };
-//
-// 		case GameActionsTypes.UPDATE_TIMER:
-// 			return { ...state, timer: action.payload };
-//
-// 		case GameActionsTypes.STOP_TIMER:
-// 			return { ...state, timerID: 0 };
-//
-// 		case GameActionsTypes.GET_RESULTS:
-// 			return { ...state, results: action.payload };
-//
-// 		case GameActionsTypes.UPDATE_RESULTS:
-// 			return { ...state, results: action.payload };
-//
-// 		case GameActionsTypes.SET_IS_RECORD:
-// 			return { ...state, isRecord: action.payload };
-//
-// 		default:
-// 			return state;
-// 	}
-// };
+					if (!resultsHaveCurrentValue) {
+						const updatedResults = [...results, timer];
+						const formattedResults = formatResults(updatedResults);
+
+						try {
+							window.localStorage.setItem('memoryGameResults', JSON.stringify(formattedResults));
+						} catch (storageError) {
+							console.error('Storage error in updateResults:', storageError);
+						}
+
+						state.results = formattedResults;
+					}
+				} catch (error) {
+					console.error('Error in updateResults reducer:', error);
+				}
+			})
+			.addCase(setIsRecord, (state, action: PayloadAction<boolean>) => {
+				try {
+					state.isRecord = action.payload;
+				} catch (error) {
+					console.error('Error in setIsRecord reducer:', error);
+				}
+			});
+	}
+);

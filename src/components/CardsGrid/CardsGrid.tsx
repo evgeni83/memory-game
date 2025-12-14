@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import Card from '../Card/Card';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useDispatch } from 'react-redux';
@@ -28,11 +28,16 @@ const CardsGrid: FC = () => {
 		}
 	}, [ match ] );
 
+	// Мемоизируем список карт для предотвращения ненужных перерисовок
+	const cardElements = useMemo(() => {
+		return list.map( item => <Card key={ item.id } item={ item }/> );
+	}, [list]);
+
 	return (
-		<div className={ classes.cardsGrid }>
-			{ list.map( item => <Card key={ item.id } item={ item }/> ) }
+		<div className={ classes.cardsGrid } data-testid="cards-grid">
+			{ cardElements }
 		</div>
 	);
 };
 
-export default CardsGrid;
+export default React.memo(CardsGrid);

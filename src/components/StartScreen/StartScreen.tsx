@@ -48,4 +48,4 @@ const StartScreen: FC = () => {
 	);
 };
 
-export default StartScreen;
+export default React.memo(StartScreen);

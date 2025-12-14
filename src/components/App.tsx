@@ -9,6 +9,12 @@ import { getResults, setIsRecord, setLastTime, stopGame, stopTimer, updateResult
 import { shuffleCards } from '../store/actions/cardsActions';
 import './App.scss';
 
+/**
+ * Главный компонент приложения Memory Game
+ * Управляет состоянием игры, отображает компоненты в зависимости от состояния игры
+ *
+ * @returns {JSX.Element} JSX элемент приложения
+ */
 const App: FC = () => {
 	const { isGameStarted, isGameOver, results, timer } = useTypedSelector( state => state.game );
 	const { list, matchedCardsAmount } = useTypedSelector( state => state.cards );

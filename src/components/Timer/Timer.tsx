@@ -24,4 +24,4 @@ const Timer: FC<ITimerProps> = ( { timer } ) => {
 	);
 };
 
-export default Timer;
+export default React.memo(Timer);

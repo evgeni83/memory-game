@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import React, { ComponentProps, FC, MouseEventHandler } from 'react';
+import React, { ComponentProps, FC, MouseEventHandler, useCallback } from 'react';
 import classes from './button.module.scss';
 
 interface IButtonProps extends ComponentProps<'button'> {
@@ -7,9 +7,16 @@ interface IButtonProps extends ComponentProps<'button'> {
 }
 
 const Button: FC<IButtonProps> = ( { clickHandler, children } ) => {
+	// Используем useCallback для оптимизации колбэка
+	const handleClick = useCallback((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+		clickHandler(e);
+	}, [clickHandler]);
+
 	return (
 		<motion.button className={ classes.btn }
-					   onClick={ clickHandler }
+					   onClick={ handleClick }
+					   whileHover={{ scale: 1.05 }}
+					   whileTap={{ scale: 0.95 }}
 					   initial={{
 						   scale: 0,
 						   rotate: -360
@@ -29,4 +36,4 @@ const Button: FC<IButtonProps> = ( { clickHandler, children } ) => {
 	);
 };
 
-export default Button;
+export default React.memo(Button);
