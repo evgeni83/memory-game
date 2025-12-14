@@ -1,100 +1,90 @@
 # Memory Game
 
-Игра "Найди пару" с улучшенной производительностью, безопасностью и архитектурой.
+The "Find a Pair" game with improved performance, security, and architecture.
 
-## Особенности
+## Features
 
-- Улучшенная производительность за счет оптимизации рендеринга и использования lazy loading
-- Поддержка WebP формата изображений с fallback на PNG
-- Строгая типизация с использованием TypeScript
-- Улучшенная архитектура Redux с обработкой ошибок
-- Мемоизация компонентов для предотвращения лишних перерисовок
-- Система тестирования с unit- и компонентными тестами
-- Политика безопасности контента (CSP) и заголовки безопасности
-- Автоматические проверки в GitHub Actions
-- Системы мониторинга ошибок и производительности
+- Improved performance through optimized rendering and lazy loading
+- Support for WebP image format with fallback to PNG
+- Strict typing with TypeScript
+- Improved Redux architecture with error handling
+- Component memoization to prevent unnecessary re-renders
+- Testing system with unit and component tests
+- Content Security Policy (CSP) and security headers
+- Automatic checks in GitHub Actions
+- Error and performance monitoring systems
 
-## Установка и запуск
+## Installation and launch
 
-1. Установите зависимости:
+1. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Запустите в режиме разработки:
+2. Run in development mode:
 ```bash
 npm start
 ```
-Приложение будет доступно по адресу http://localhost:3333
+The application will be available at http://localhost:3333
 
-3. Запустите тесты:
+3. Run tests:
 ```bash
 npm test
 ```
 
-4. Запустите тесты в режиме watch:
+4. Run tests in watch mode:
 ```bash
 npm run test:watch
 ```
 
-5. Проверьте покрытие кода тестами:
+5. Check code coverage with tests:
 ```bash
 npm run test:coverage
 ```
 
-6. Проверьте типы:
+6. Check the types:
 ```bash
 npx tsc --noEmit
 ```
 
-7. Проверьте размер бандла:
+7. Check the bundle size:
 ```bash
 npm run size
 ```
 
-8. Соберите проект:
+8. Build the project:
 ```bash
 npm run build
 ```
 
-## Структура проекта
+## Project Structure
 
-- `src/components` — React-компоненты
-- `src/store` — Redux логика
-- `src/types` — TypeScript типы
-- `src/utils` — Вспомогательные утилиты (логирование ошибок, мониторинг производительности)
-- `src/hooks` — Пользовательские React хуки
+- `src/components` — React components
+- `src/store` — Redux logic
+- `src/types` — TypeScript types
+- `src/utils` — Auxiliary utilities (error logging, performance monitoring)
+- `src/hooks` — Custom React Hooks
 
-## Архитектура
+## Security
 
-Для подробного описания архитектуры см. [ARCHITECTURE.md](./ARCHITECTURE.md).
-
-## Безопасность
-
-Проект включает в себя:
-- Content Security Policy (CSP) для предотвращения XSS
-- Заголовки безопасности (X-Frame-Options, X-XSS-Protection и др.)
-- Обработку ошибок с глобальным Error Boundary
-- Логирование ошибок в продакшене
+The project includes:
+- Content Security Policy (CSP) for XSS Prevention
+- Security Headers (X-Frame-Options, X-XSS-Protection, etc.)
+- Error handling with a global Error Boundary
+- Production Error Logging
 
 ## CI/CD
 
-- Автоматические тесты
-- Проверка типов
-- Проверка размера бандла
-- Деплой на GitHub Pages при пуше в main
+- Automated tests
+- Type checking
+- Bundle Size Check
+- Deploy to GitHub Pages on push to main
 
-## Тестирование
+## Testing
 
-- Unit-тесты для Redux-логики
-- Компонентные тесты для основных компонентов
+- Unit tests for Redux logic
+- Component tests for core components
 
-## Известные проблемы безопасности
+## Known Security Issues
 
-Некоторые зависимости (в основном пакеты оптимизации изображений) имеют известные уязвимости. Эти пакеты используются только на этапе сборки, а не в продакшен-приложении, что снижает риск эксплуатации.
-
-Для получения дополнительной информации см. [SECURITY_RECOMMENDATIONS.md](./SECURITY_RECOMMENDATIONS.md).
-
-## Развитие проекта
-
-Для отслеживания выполненных улучшений см. [IMPROVEMENTS_SUMMARY.md](./IMPROVEMENTS_SUMMARY.md).
+Some dependencies (primarily image optimization packages) have known vulnerabilities. These packages are only used during the build phase, not in the production application, which reduces the risk of exploitation.
