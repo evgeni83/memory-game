@@ -10,6 +10,26 @@ const GH_PAGES = process.env.GH_PAGES === 'true';
 
 const BundleAnalyzerPlugin = ANALYZE ? require('webpack-bundle-analyzer').BundleAnalyzerPlugin : null;
 
+// Заголовки безопасности
+const securityHeaders = [
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff'
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY'
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block'
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin-when-cross-origin'
+  }
+];
+
 const config = {
 	mode: process.env.NODE_ENV || 'development',
 	resolve: {
@@ -27,6 +47,16 @@ const config = {
 		open: true,
 		hot: true,
 		static: path.resolve(__dirname, 'public'),
+		setupMiddlewares: (middlewares, devServer) => {
+			// Добавляем заголовки безопасности
+			middlewares.unshift((req, res, next) => {
+				securityHeaders.forEach(header => {
+					res.setHeader(header.key, header.value);
+				});
+				next();
+			});
+			return middlewares;
+		},
 	},
 	devtool: IS_DEV ? 'source-map' : false,
 	module: {
