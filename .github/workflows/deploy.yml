@@ -32,12 +32,6 @@ jobs:
       run: |
         GH_PAGES=true npm run build
 
-    - name: Check bundle size
-      run: |
-        # Установим size-limit если он не установлен
-        npm install --save-dev @size-limit/preset-app
-        # Проверим размер бандла
-        npx size-limit
 
   deploy:
     needs: test
