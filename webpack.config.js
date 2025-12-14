@@ -6,6 +6,8 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const IS_DEV = process.env.NODE_ENV === 'development';
 
+const GH_PAGES = process.env.GH_PAGES === 'true';
+
 module.exports = {
 	mode: process.env.NODE_ENV || 'development',
 	resolve: {
@@ -14,6 +16,7 @@ module.exports = {
 	entry: { app: path.resolve( __dirname, 'src', 'index.tsx' ) },
 	output: {
 		path: path.resolve( __dirname, 'dist' ),
+		publicPath: GH_PAGES ? '/memory-game/' : '/',
 		filename: IS_DEV ? 'js/[name].js' : 'js/[name]-[contenthash:base64].js',
 		clean: true,
 	},
